@@ -1,0 +1,108 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="cl.inacap.unidad3.tarea3.activity.PedidosActivity" >
+    
+    <TextView
+        android:id="@+id/lb_lista_productos"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/lb_pedido_productos" />
+
+    <Spinner
+        android:id="@+id/sp_lista_productos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:tag="Seleccione un Producto" />
+
+    <TextView
+        android:id="@+id/lb_pedido_cantidad"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/lb_pedido_cantidad" />    
+    
+    <EditText
+        android:id="@+id/txt_pedido_cantidad"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" 
+        android:ems="10"
+        android:inputType="number" />
+
+	<TextView
+        android:id="@+id/lb_pedido_precio"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/lb_pedido_precio" />    
+    
+    <EditText
+        android:id="@+id/txt_pedido_precio"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+       	android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:inputType="number" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp" >
+        
+        <Button
+            android:id="@+id/btn_pedido_eliminar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:textSize="14sp"
+            android:text="@string/btn_pedido_eliminar"
+            android:background="@drawable/button_style"
+            android:textColor="#FFFFFFFF"
+            android:layout_margin="2dp"/>
+        
+        <Button
+            android:id="@+id/btn_pedido_crear"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:textSize="14sp"
+            android:text="@string/btn_pedido_crear"
+            android:background="@drawable/button_style"
+            android:textColor="#FFFFFFFF"
+            android:layout_margin="2dp"/>
+        
+        <Button
+            android:id="@+id/btn_pedido_actualizar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:textSize="14sp"
+            android:text="@string/btn_pedido_actualizar"
+            android:background="@drawable/button_style"
+            android:textColor="#FFFFFFFF"
+            android:layout_margin="2dp"/>
+                   
+    </LinearLayout>
+    
+    <Button
+        android:id="@+id/btn_pedido_cancelar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="@string/btn_pedido_cancelar"
+        android:background="@drawable/button_style"
+        android:textColor="#FFFFFFFF"/>
+
+</LinearLayout>
