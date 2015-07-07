@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cl.inacap.unidad1.tarea2.activity.R;
+import cl.inacap.unidad3.tarea3.activity.R;
 import android.content.Context;
 
 public class Usuario {

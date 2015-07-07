@@ -54,14 +54,14 @@
     <string name="title_activity_pedido">Pedidos</string>
     <string name="title_activity_informe">Informe de Pedidos</string>
     <string name="action_Informe">Resumen de Caja</string>
-    
+    <string name="action_rutas">Rutas</string>
     <string name="mensaje_error_Login">Usuario o contraseña incorrectos</string>
-    
     <string name="action_search">Buscar</string>
     <string name="buscar_name">Buscar</string>
     <string name="buscar_hint">Buscar aqui</string>
-    
     <string name="color_actionBar">#FF4d92b8</string>
-    
+    <string name="title_activity_mapa">Ruta</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

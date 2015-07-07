@@ -10,4 +10,9 @@
           android:icon="@drawable/ic_content_paste_black_48dp" 
           android:title="@string/action_Informe"          
           android:showAsAction="ifRoom" />
+    
+    <item android:id="@+id/rutas"
+          android:icon="@android:drawable/ic_menu_mapmode" 
+          android:title="@string/action_rutas"          
+          android:showAsAction="ifRoom" />
 </menu>

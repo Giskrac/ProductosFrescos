@@ -1,6 +1,5 @@
 package cl.inacap.unidad3.tarea3.activity;
 
-import cl.inacap.unidad1.tarea2.activity.R;
 import cl.inacap.unidad3.tarea3.clases.Usuario;
 import android.app.Activity;
 import android.content.Intent;

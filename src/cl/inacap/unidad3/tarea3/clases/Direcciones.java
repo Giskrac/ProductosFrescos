@@ -1,6 +1,7 @@
 package cl.inacap.unidad3.tarea3.clases;
 
 public class Direcciones {
+	public double id_usuario;
 	public double latitud;
 	public double longitud;
 	public String direccion;

@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cl.inacap.unidad1.tarea2.activity"
+    package="cl.inacap.unidad3.tarea3.activity"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="22" />
-    
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" >      
         <activity
             android:name="cl.inacap.unidad3.tarea3.activity.LoginActivity"
             android:label="@string/app_name"
@@ -30,19 +32,16 @@
             android:name="cl.inacap.unidad3.tarea3.activity.ClientesActivity"
             android:label="@string/title_activity_clientes"
             android:theme="@android:style/Theme.Holo.Light" >
-            
             <intent-filter>
-			    <action android:name="android.intent.action.SEARCH" />
-			</intent-filter>
-			
-			<meta-data
-			    android:name="android.app.default_searchable"
-			    android:value="cl.inacap.unidad3.tarea1.activity.ClientesActivity" /> 
-			<meta-data
-			    android:name="android.app.searchable"
-			    android:resource="@xml/searchable" />
-            
-            
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="cl.inacap.unidad3.tarea1.activity.ClientesActivity" />
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
         <activity
             android:name="cl.inacap.unidad3.tarea3.activity.PedidoActivity"
@@ -54,6 +53,14 @@
             android:label="@string/title_activity_informe"
             android:theme="@android:style/Theme.Holo.Light" >
         </activity>
+        <activity
+            android:name="cl.inacap.unidad3.tarea3.activity.MapaActivity"
+            android:label="@string/title_activity_mapa" >
+        </activity>
+        
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBuKcdZ3VvuiYnPFBA_e7i29hVE2Vc6o08"/>
+        
     </application>
 
 </manifest>

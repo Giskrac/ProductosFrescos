@@ -1,14 +1,11 @@
 package cl.inacap.unidad3.tarea3.activity;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-import cl.inacap.unidad1.tarea2.activity.R;
 import cl.inacap.unidad3.tarea3.clases.Cliente;
 import cl.inacap.unidad3.tarea3.clases.Direcciones;
 import cl.inacap.unidad3.tarea3.clases.Pedido;
@@ -26,7 +23,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -352,6 +348,13 @@ public class ClientesActivity extends Activity implements LocationListener {
 				startActivity(intent);
 				
 	            return true;
+	            
+	        case R.id.rutas: //opcion rutas
+	        	
+	        	Intent intentRutas = new Intent(this, MapaActivity.class);
+				startActivity(intentRutas);
+				
+	            return true;    
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
@@ -400,6 +403,7 @@ public class ClientesActivity extends Activity implements LocationListener {
 					
 					Direcciones direccion = new Direcciones();
 		        	
+					direccion.id_usuario = id_usuario;
 		        	direccion.longitud = loc.getLongitude(); 
 					direccion.latitud = loc.getLatitude(); 
 					direccion.direccion = address.getAddressLine(0);

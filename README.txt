@@ -6,6 +6,5 @@ Actividad	: 14: Tarea sumativa: Desarrollo de una aplicación móvil en Android
 Profesor	: CRISTIAN CORREA
 Alumno		: GUILLERMO CASTILLO ISKRAC
 
+
 https://github.com/Giskrac/ProductosFrescos
-
-

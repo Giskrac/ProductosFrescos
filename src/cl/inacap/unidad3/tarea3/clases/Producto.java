@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.content.Context;
-import cl.inacap.unidad1.tarea2.activity.R;
+import cl.inacap.unidad3.tarea3.activity.R;
 
 public class Producto {
 	public int id_producto;

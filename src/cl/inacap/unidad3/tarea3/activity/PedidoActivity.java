@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import cl.inacap.unidad1.tarea2.activity.R;
 import cl.inacap.unidad3.tarea3.clases.Cliente;
 import cl.inacap.unidad3.tarea3.clases.Pedido;
 import cl.inacap.unidad3.tarea3.clases.Producto;
@@ -321,6 +320,12 @@ public class PedidoActivity extends Activity {
 	        	
 	        	Intent intent = new Intent(this, InformeActivity.class);
 				startActivity(intent);
+				
+	            return true;
+	        case R.id.rutas: //opcion rutas
+	        	
+	        	Intent intentRutas = new Intent(this, MapaActivity.class);
+				startActivity(intentRutas);
 				
 	            return true;
 	        default:

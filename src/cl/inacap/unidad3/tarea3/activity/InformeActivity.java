@@ -2,7 +2,6 @@ package cl.inacap.unidad3.tarea3.activity;
 
 import java.util.ArrayList;
 
-import cl.inacap.unidad1.tarea2.activity.R;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -104,6 +103,12 @@ public class InformeActivity extends Activity {
 	        	
 	        	Intent intent = new Intent(this, InformeActivity.class);
 				startActivity(intent);
+				
+	            return true;
+	        case R.id.rutas: //opcion rutas
+	        	
+	        	Intent intentRutas = new Intent(this, MapaActivity.class);
+				startActivity(intentRutas);
 				
 	            return true;
 	        default:
