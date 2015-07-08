@@ -2,9 +2,13 @@ package cl.inacap.unidad3.tarea3.activity;
 
 import java.util.ArrayList;
 
+import cl.inacap.unidad3.tarea3.clases.Pedido;
+import cl.inacap.unidad3.tarea3.clases.Producto;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -35,6 +39,12 @@ public class InformeActivity extends Activity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
 		
+		SharedPreferences prefs = getSharedPreferences("user_data", MODE_PRIVATE); 
+		int id_usuario = prefs.getInt("id_usuario", 0);
+		
+		Pedido pedido = new Pedido();		
+		ArrayList<Pedido> informeDePedidos = pedido.InformeDePedidos(getApplicationContext(), id_usuario);
+		
 		//se crean los elementos que contiene el layout para mostrar los resultados del informe
 		ListView lv_informe= (ListView)findViewById(R.id.lv_informe);
 		TextView txt_saldos= (TextView)findViewById(R.id.lb_saldos);
@@ -43,30 +53,24 @@ public class InformeActivity extends Activity {
 		ArrayList<String> informeArreglo = new ArrayList<String>();
 		
 		//contamos los elementos del ArrayList PedidoGeneral
-		int count = ClientesActivity.PedidosGeneral.size();
+		int count = informeDePedidos.size();
 		
 		// se recorre los elementos de PedidoGeneral
 		for(int i=0; i < count; i++)
 		{
-			if(ClientesActivity.PedidosGeneral.get(i).visible == true)
-			{
 				
-				// se obtiene el subtotal sumando la cantidad y el precio de un pedido en especifico
-				int subTotal = ClientesActivity.PedidosGeneral.get(i).cantidad_pedido * ClientesActivity.PedidosGeneral.get(i).precio_pedido;
-				
-				//se agrega el string para mostrar el registro en el listview
-				informeArreglo.add(ClientesActivity.PedidosGeneral.get(i).fecha_entrega_pedido + " " + ClientesActivity.PedidosGeneral.get(i).nombre_cliente_pedido + "\n"
-									+ ClientesActivity.PedidosGeneral.get(i).producto_pedido + "\n"
-									+ ClientesActivity.PedidosGeneral.get(i).cantidad_pedido + "\t X \t" + ClientesActivity.PedidosGeneral.get(i).precio_pedido + "\t = \t" + subTotal);			
-				
-				//se obtiene los datos necesario para los totales finales
-				saldo = saldo + subTotal;
-				pedidos++;
-				entregas = entregas + ClientesActivity.PedidosGeneral.get(i).cantidad_pedido;
-				
-				
-			}
+			// se obtiene el subtotal sumando la cantidad y el precio de un pedido en especifico
+			int subTotal = informeDePedidos.get(i).cantidad * informeDePedidos.get(i).precio;
 			
+			//se agrega el string para mostrar el registro en el listview
+			informeArreglo.add(informeDePedidos.get(i).fecha_entrega + " " + informeDePedidos.get(i).nombre_cliente + "\n"
+								+ informeDePedidos.get(i).nombre_producto + "\n"
+								+ informeDePedidos.get(i).cantidad + "\t X \t" + informeDePedidos.get(i).precio + "\t = \t" + subTotal);			
+			
+			//se obtiene los datos necesario para los totales finales
+			saldo = saldo + subTotal;
+			pedidos++;
+			entregas = entregas + informeDePedidos.get(i).cantidad;			
 			
 		}
 				

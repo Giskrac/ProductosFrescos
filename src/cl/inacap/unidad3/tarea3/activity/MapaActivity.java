@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActionBar;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -14,15 +12,10 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import cl.inacap.unidad3.tarea3.clases.Cliente;
-import cl.inacap.unidad3.tarea3.clases.Pedido;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -88,11 +81,10 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
     		
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
-        map.moveCamera(CameraUpdateFactory.zoomTo(10));
+        map.moveCamera(CameraUpdateFactory.zoomTo(14));
     }
     
     @Override

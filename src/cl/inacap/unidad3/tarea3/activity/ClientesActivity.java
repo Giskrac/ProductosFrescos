@@ -7,14 +7,14 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import cl.inacap.unidad3.tarea3.clases.Cliente;
-import cl.inacap.unidad3.tarea3.clases.Direcciones;
-import cl.inacap.unidad3.tarea3.clases.Pedido;
+import cl.inacap.unidad3.tarea3.clases.Posicion;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Criteria;
@@ -57,19 +57,10 @@ public class ClientesActivity extends Activity implements LocationListener {
 	
 	private int id_usuario;
 	
-	public ArrayList<Cliente> misClientes;	
-	
-	public static ArrayList<Pedido> PedidosGeneral;
-	public static ArrayList<Direcciones> direcciones;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_clientes);
-		
-		//creamos la lista donde estaran los datos de localizacion
-		if(direcciones == null)
-			direcciones = new ArrayList<Direcciones>();
 		
 		//instanciamos el actionbar para controlar sus eventos y agregar opciones como en un menu
 		ActionBar actionBar = getActionBar();		
@@ -80,25 +71,54 @@ public class ClientesActivity extends Activity implements LocationListener {
 		//desabilitamos el boton home del actionbar
 		actionBar.setDisplayHomeAsUpEnabled(false);
 		
-		if(PedidosGeneral == null)
-			PedidosGeneral = new ArrayList<Pedido>();
-		
-		Bundle bundle = getIntent().getExtras();
-		
-		id_usuario = bundle.getInt("id_usuario");
+		//optenemos el id del usuario desde las preferencias
+		SharedPreferences prefs = getSharedPreferences("user_data", MODE_PRIVATE); 
+		id_usuario = prefs.getInt("id_usuario", 0);		
 			
 		lv_clientes = (ListView) findViewById(R.id.lv_clientes);
 		
 		//Instanciamos la clase usuario para llamar al  
 		//metodo listarClientes() para llevarlos al adapter
 		cliente = new Cliente();
-		misClientes = cliente.ListarMisClientes(this, id_usuario);
+
+		//Actualizamos el listview
+		updateListView(cliente.MisClientes(this, id_usuario));
 		
-		//Creamos un adapter con un layout propio para cambiar ale color a la letra
-		adapter = new ArrayAdapter<Cliente>(this, R.layout.item_cliente, misClientes);
+		ImageButton botonNuevoCliente = (ImageButton) findViewById(R.id.btn_cliente_crear_nuevo);		
+		botonNuevoCliente.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				EditDialog("crear", 0);				
+			}
+		});
 		
-		//Agregamos el adapter al listView
-		lv_clientes.setAdapter(adapter);	
+		
+		// TODO Auto-generated method stub
+		manejador = (LocationManager) getSystemService(LOCATION_SERVICE);
+	    Criteria criterio = new Criteria();
+	    criterio.setCostAllowed(false);
+	    criterio.setAltitudeRequired(false);
+	    criterio.setAccuracy(Criteria.ACCURACY_FINE);
+	    proveedor = manejador.getBestProvider(criterio, true);
+	}
+	
+	private void updateListView(final ArrayList<Cliente> lista)
+	{
+		
+		//limpiamos el adapter
+		if(adapter != null){
+			adapter.clear();
+			lv_clientes.setAdapter(null);
+			adapter.notifyDataSetChanged();
+		}
+			
+		//Creamos un adapter con un layout propio para cambiar el color a la letra
+		adapter = new ArrayAdapter<Cliente>(this, R.layout.item_cliente, lista);
+
+		//Agregamos el adapter al listView		
+		lv_clientes.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
 		
 		//creamos el Listener para escuchar el click largo para abrir la ventana de modificacion
 		lv_clientes.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -106,7 +126,7 @@ public class ClientesActivity extends Activity implements LocationListener {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 				//llamamos al metodo que nos desplegara la ventana de modificacion
-				EditDialog("editar", position);
+				EditDialog("editar", lista.get(position).id_cliente);
 				return false;
 			}
 		});
@@ -118,35 +138,16 @@ public class ClientesActivity extends Activity implements LocationListener {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
 				Intent intent = new Intent(ClientesActivity.this, PedidoActivity.class);
-	    		intent.putExtra("id_cliente", misClientes.get(position).id_cliente);
-	    		intent.putExtra("nombre_cliente", misClientes.get(position).nombre_cliente);
+	    		intent.putExtra("id_cliente", lista.get(position).id_cliente);
+	    		intent.putExtra("id_usuario", id_usuario);
+	    		intent.putExtra("nombre_cliente", lista.get(position).nombre_cliente);
 	    		ClientesActivity.this.startActivity(intent); 
 				
 			}
 			
-		});		
+		});	
 		
-		ImageButton botonNuevoCliente = (ImageButton) findViewById(R.id.btn_cliente_crear_nuevo);		
-		botonNuevoCliente.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				EditDialog("crear", 0);				
-			}
-		});
 		
-		//notificamos al adapter un cambio
-		adapter.notifyDataSetChanged();
-		
-		// TODO Auto-generated method stub
-		manejador = (LocationManager) getSystemService(LOCATION_SERVICE);
-	    Criteria criterio = new Criteria();
-	    criterio.setCostAllowed(false);
-	    criterio.setAltitudeRequired(false);
-	    criterio.setAccuracy(Criteria.ACCURACY_FINE);
-	    proveedor = manejador.getBestProvider(criterio, true);
-	    Location localizacion = manejador.getLastKnownLocation(proveedor);
-	    registrarDireccion(localizacion);
 	}
 	
 	@Override
@@ -187,6 +188,10 @@ public class ClientesActivity extends Activity implements LocationListener {
 	    final Dialog dialog = new Dialog(this);	    
 	    
 		dialog.setContentView(R.layout.dialog_modificar_clientes);
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
+		
+		lv_clientes.setEnabled(false);
 		
 		final EditText nombre    = (EditText) dialog.findViewById(R.id.txt_nombre_cliente);
 		final EditText direccion = (EditText) dialog.findViewById(R.id.txt_direccion_cliente);
@@ -200,11 +205,12 @@ public class ClientesActivity extends Activity implements LocationListener {
 		//si la accion es aditar debemos llenar los campos con los datos actuales
 		if(accion.equals("editar"))
 		{
+			Cliente clienteActual = cliente.MostrarCliente(index);
 			dialog.setTitle(R.string.dialog_titulo_cliente_editar);
 			
-			nombre.setText(misClientes.get(index).nombre_cliente);
-			direccion.setText(misClientes.get(index).direccion_cliente);
-			telefono.setText(misClientes.get(index).telefono_cliente);
+			nombre.setText(clienteActual.nombre_cliente);
+			direccion.setText(clienteActual.direccion_cliente);
+			telefono.setText(clienteActual.telefono_cliente);
 			
 			botonCrear.setVisibility(View.GONE);			
 			
@@ -223,10 +229,8 @@ public class ClientesActivity extends Activity implements LocationListener {
 			public void onClick(View v) {
 				
 				//Borramos el cliente seleccionado
-				misClientes = cliente.borrarCliente(misClientes, index);
-				
-				//notificamos al adapter un cambio
-				adapter.notifyDataSetChanged();
+				updateListView(cliente.borrarCliente(index));
+				lv_clientes.setEnabled(true);
 				dialog.dismiss();
 			}
 		});			
@@ -240,10 +244,10 @@ public class ClientesActivity extends Activity implements LocationListener {
 				nuevoCliente.nombre_cliente 	= nombre.getText().toString();
 				nuevoCliente.direccion_cliente 	= direccion.getText().toString();
 				nuevoCliente.telefono_cliente 	= telefono.getText().toString();
-				
-				misClientes = cliente.agregarCliente(misClientes, nuevoCliente);				
-				
-				adapter.notifyDataSetChanged();
+				nuevoCliente.id_usuario 		= id_usuario;
+
+				updateListView(cliente.agregarCliente(nuevoCliente));
+				lv_clientes.setEnabled(true);
 				dialog.dismiss();
 			}
 		});		
@@ -258,9 +262,8 @@ public class ClientesActivity extends Activity implements LocationListener {
 				nuevoCliente.direccion_cliente 	= direccion.getText().toString();
 				nuevoCliente.telefono_cliente 	= telefono.getText().toString();
 				
-				misClientes = cliente.actualizarCliente(misClientes, nuevoCliente, index);
-				
-				adapter.notifyDataSetChanged();
+				updateListView(cliente.actualizarCliente(nuevoCliente, index));
+				lv_clientes.setEnabled(true);
 				dialog.dismiss();
 			}
 		});
@@ -269,6 +272,7 @@ public class ClientesActivity extends Activity implements LocationListener {
 		botonCancelar.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				lv_clientes.setEnabled(true);
 				dialog.dismiss();
 			}
 		});
@@ -302,20 +306,20 @@ public class ClientesActivity extends Activity implements LocationListener {
 				Log.d("SEARCH", query);
 				
 				ArrayList<Cliente> tempArrayList = new ArrayList<Cliente>();
-				tempArrayList = cliente.ListarMisClientes(getApplicationContext(), id_usuario);					
-				misClientes.clear();
+				ArrayList<Cliente> requestArrayList = new ArrayList<Cliente>();
+				tempArrayList = cliente.MisClientes(getApplicationContext(), id_usuario);					
 					
 				for(Cliente c: tempArrayList){
 					
 					Log.d("SEARCH", "BUSCANDO: " + c.toString());
 					
 					if (c.toString().toLowerCase().contains(query.toString().toLowerCase())) {
-						misClientes.add(c);
+						requestArrayList.add(c);
 					}
 					
 				}						
 				
-				adapter.notifyDataSetChanged();
+				updateListView(requestArrayList);
 
 				return true; 
             }
@@ -386,7 +390,7 @@ public class ClientesActivity extends Activity implements LocationListener {
 	
 	
 	public class WSBackgroundLocation extends AsyncTask<Location, String, String> {
-
+		
 		// obtenemos los datos de localizacion necesarios
 		@Override
 		protected String doInBackground(Location... params) {
@@ -401,16 +405,14 @@ public class ClientesActivity extends Activity implements LocationListener {
 					Address address = list.get(0);		
 					Log.d(TAG, address.getAddressLine(0));
 					
-					Direcciones direccion = new Direcciones();
+					Posicion posicion = new Posicion();
 		        	
-					direccion.id_usuario = id_usuario;
-		        	direccion.longitud = loc.getLongitude(); 
-					direccion.latitud = loc.getLatitude(); 
-					direccion.direccion = address.getAddressLine(0);
+					posicion.id_usuario = id_usuario;
+					posicion.longitud = loc.getLongitude(); 
+					posicion.latitud = loc.getLatitude(); 
+					posicion.direccion = address.getAddressLine(0);
 					
-					Log.d(TAG, direccion.toString());
-			        	
-			        direcciones.add(direccion);
+					posicion.addPosition(getApplicationContext(), posicion);
 
 				}
 

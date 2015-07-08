@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    
     <string name="app_name">Productos Frescos S.A.</string>
     <string name="action_pedido">Resumen de Caja</string>
     <string name="lb_cliente_nombre">Nombre</string>
@@ -22,7 +22,7 @@
     <string name="btn_pedido_cancelar">Cancelar</string>
     <string name="btn_pedido_crear_externo">Crear Nuevo Pedido</string>
     <string name="dialog_titulo_pedido_crear">Crear Nuevo Pedido</string>
-    <string name="dialog_titulo_pedido_editar">Modificar Pedido</string>
+    <string name="dialog_titulo_pedido_editar">Modificar Pedido</string> 
 
     <string-array name="clientes_array">
         <item>{\'id_cliente\':1,\'nombre_cliente\':\'Almacen La Joyita\',\'direccion_cliente\':\'Macul 3456\',\'telefono_cliente\':\'56222345678\',\'id_usuario\':1,\'visible\':1}</item>

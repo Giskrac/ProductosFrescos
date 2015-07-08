@@ -1,8 +1,10 @@
 package cl.inacap.unidad3.tarea3.activity;
 
+import cl.inacap.unidad3.tarea3.clases.BaseDatos;
 import cl.inacap.unidad3.tarea3.clases.Usuario;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +25,8 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        
+        BaseDatos db = new BaseDatos(this);
         
         //creamos un textview para mostrar el error de login
         txt_error_login = (TextView)findViewById(R.id.txt_error_login);
@@ -71,8 +75,11 @@ public class LoginActivity extends Activity {
     		txt_login.setText("");
     		txt_contrasena.setText("");
     		
+    		SharedPreferences.Editor editor = getSharedPreferences("user_data", MODE_PRIVATE).edit();
+    		 editor.putInt("id_usuario", id_usuario);
+    		 editor.commit();
+    		
     		Intent intent = new Intent(LoginActivity.this, ClientesActivity.class);
-    		intent.putExtra("id_usuario", id_usuario);
     		LoginActivity.this.startActivity(intent);    		
     	}
     	else

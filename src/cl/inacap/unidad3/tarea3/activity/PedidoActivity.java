@@ -15,6 +15,7 @@ import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.ArrayAdapter;
@@ -38,17 +40,23 @@ import android.widget.Spinner;
 
 public class PedidoActivity extends Activity {	
 	
-	private ArrayAdapter<Pedido> pedidoAdapter;
+	private String TAG = "PedidoActivity";
+	
+	private ArrayAdapter<Pedido> pedidosAdapter;
 	private Pedido pedido;
 	private ListView lv_pedidos;
 	
 	private int id_cliente;
+	private int id_usuario;
 	private String nombre_cliente;
 	
 	private ArrayAdapter<Producto> adapterSpinner;
 	private ArrayList<Producto> arrayProductos;		
 	
 	public ArrayList<Pedido> misPedidos;
+	private Producto mProducto;
+	
+	private int idProductoSeleccionado;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +73,19 @@ public class PedidoActivity extends Activity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
 		
+		//optenemos el id del usuario desde las preferencias
+		SharedPreferences prefs = getSharedPreferences("user_data", MODE_PRIVATE); 
+		id_usuario = prefs.getInt("id_usuario", 0);	
+		
 		Bundle bundle = getIntent().getExtras();
 		
 		id_cliente = bundle.getInt("id_cliente");
 		nombre_cliente = bundle.getString("nombre_cliente");
 		
-		Producto producto = new Producto();
-		arrayProductos = producto.listaProductos(this);
+		actionBar.setTitle("Pedido: " + nombre_cliente);
+		
+		mProducto = new Producto();
+		arrayProductos = mProducto.listaProductos(this);
 		
 		// Reservamos el adapter para la lista de productos
 		adapterSpinner = new ArrayAdapter<Producto>(this, R.layout.item_producto, arrayProductos);
@@ -87,28 +101,40 @@ public class PedidoActivity extends Activity {
 		
 		lv_pedidos = (ListView) findViewById(R.id.lv_pedidos);
 		
-		pedido = new Pedido();		
-		misPedidos = pedido.misPedidos(ClientesActivity.PedidosGeneral, id_cliente);	
-
-		//Creamos un adapter con un layout propio para personalizar el color a la letra
-		pedidoAdapter = new ArrayAdapter<Pedido>(this, R.layout.item_pedido, misPedidos);
+		pedido = new Pedido(getApplicationContext(), id_cliente, id_usuario);		
+		misPedidos = pedido.ListarPedidos();	
+		
+		updateListView(misPedidos);
+			
+	}
+	
+	private void updateListView(final ArrayList<Pedido> lista)
+	{
+		
+		misPedidos = lista;
+		
+		//limpiamos el adapter
+		if(pedidosAdapter != null){
+			pedidosAdapter.clear();
+			lv_pedidos.setAdapter(null);
+			pedidosAdapter.notifyDataSetChanged();
+		}
+		
+		pedidosAdapter = new ArrayAdapter<Pedido>(this, R.layout.item_pedido, misPedidos);
 		
 		//Agregamos el adapter al listView
-		lv_pedidos.setAdapter(pedidoAdapter);
+		lv_pedidos.setAdapter(pedidosAdapter);
+		pedidosAdapter.notifyDataSetChanged();
 		
 		//creamos el listener que quedara escuchando si se selecciona un pedido en la lista
 		lv_pedidos.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				
-				EditDialog("editar", position);				
-				
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {				
+				EditDialog("editar", position);								
 			}
 			
 		});
-		
-		pedidoAdapter.notifyDataSetChanged();
 		
 	}
 	
@@ -136,6 +162,7 @@ public class PedidoActivity extends Activity {
 			public void onItemSelected(AdapterView<?> arg0, View v, int position, long arg3) {
 				//al seleccionar un producto del spinner mostramos su precio
 				precio.setText("" + arrayProductos.get(position).precio_producto);				
+				idProductoSeleccionado = arrayProductos.get(position).id_producto;
 			}
 
 			@Override
@@ -145,14 +172,30 @@ public class PedidoActivity extends Activity {
 			
 		});
 		
+				
 		//si la accion es aditar debemos llenar los campos con los datos actuales
 		if(accion.equals("editar"))
 		{
+			
 			dialog.setTitle(R.string.dialog_titulo_pedido_editar);
 			
-			productos.setSelection(misPedidos.get(index).id_producto_pedido);			
-			cantidad.setText("" + misPedidos.get(index).cantidad_pedido);
-			precio.setText("" + misPedidos.get(index).precio_pedido);
+			String nombre = misPedidos.get(index).nombre_producto;				
+
+			int cant = productos.getCount();
+			
+			for(int i=0; i < cant; i++)
+			{	
+				
+				if(productos.getItemAtPosition(i).toString().equals(nombre.toString()))
+				{
+					productos.setSelection(i);
+					break;
+				}
+			}
+		
+		
+			cantidad.setText(String.valueOf(misPedidos.get(index).cantidad));
+			precio.setText(String.valueOf(misPedidos.get(index).precio));
 			
 			botonCrear.setVisibility(View.GONE);			
 			
@@ -168,12 +211,9 @@ public class PedidoActivity extends Activity {
 		// si el boton e cliqueado eliminaremos al ocultaremos el pedido
 		botonEliminar.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				
+			public void onClick(View v) {				
 				//Borramos el pedido seleccionado
-				misPedidos = pedido.borrarPedido(misPedidos, misPedidos.get(index).id_pedido, index);
-				
-				pedidoAdapter.notifyDataSetChanged();
+				updateListView(pedido.borrarPedido(misPedidos.get(index).id_pedido));
 				dialog.dismiss();
 			}
 		});			
@@ -185,26 +225,20 @@ public class PedidoActivity extends Activity {
 				
 				//obtenemos la fecha actual
 				Date currentLocalTime = Calendar.getInstance().getTime();
-				SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyy HH:mm");   
+				SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyy");   
 				String localTime = date.format(currentLocalTime);
 				
 				//se crea un nuevo objeto pedido para agregarlo al registro
-				Pedido nuevoPedido = new Pedido();
+				Pedido mPedido = new Pedido();
 				
-				nuevoPedido.id_pedido = 0;
-				nuevoPedido.id_cliente = id_cliente;
-				nuevoPedido.nombre_cliente_pedido = nombre_cliente;
-				nuevoPedido.id_producto_pedido = productos.getSelectedItemPosition();
-				nuevoPedido.producto_pedido = productos.getSelectedItem().toString();
-				nuevoPedido.fecha_entrega_pedido = localTime;
-				nuevoPedido.cantidad_pedido = Integer.parseInt(cantidad.getText().toString());	
-				nuevoPedido.precio_pedido = Integer.parseInt(precio.getText().toString());
-				nuevoPedido.visible = true;
+				mPedido.id_cliente = id_cliente;
+				mPedido.id_usuario = id_usuario;
+				mPedido.id_producto = idProductoSeleccionado;
+				mPedido.fecha_entrega = localTime;
+				mPedido.cantidad = Integer.parseInt(cantidad.getText().toString());
 				
 				//se agrega el nuevo pedido
-				misPedidos = pedido.agregarPedido(misPedidos, nuevoPedido, id_cliente);	
-
-				pedidoAdapter.notifyDataSetChanged();
+				updateListView(pedido.agregarPedido(mPedido));	
 				dialog.dismiss();
 			}
 		});		
@@ -216,26 +250,18 @@ public class PedidoActivity extends Activity {
 				
 				//se obtienes la fecha actual
 				Date currentLocalTime = Calendar.getInstance().getTime();
-				SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyy HH:mm");   
+				SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyy");   
 				String localTime = date.format(currentLocalTime);
 				
 				//se crea un nuevo objeto pedido para remplazar al registro existente
-				Pedido nuevoPedido = new Pedido();
+				Pedido mPedido = new Pedido();
 				
-				nuevoPedido.id_pedido = misPedidos.get(index).id_pedido;
-				nuevoPedido.id_cliente = id_cliente;
-				nuevoPedido.nombre_cliente_pedido = nombre_cliente;
-				nuevoPedido.id_producto_pedido = productos.getSelectedItemPosition();
-				nuevoPedido.producto_pedido = productos.getSelectedItem().toString();
-				nuevoPedido.fecha_entrega_pedido = localTime;
-				nuevoPedido.cantidad_pedido = Integer.parseInt(cantidad.getText().toString());	
-				nuevoPedido.precio_pedido = Integer.parseInt(precio.getText().toString());
-				nuevoPedido.visible = true;
+				mPedido.id_producto = idProductoSeleccionado;
+				mPedido.fecha_entrega = localTime;
+				mPedido.cantidad = Integer.parseInt(cantidad.getText().toString());	
 				
 				//se actualiza el pedido actual
-				misPedidos = pedido.actualizarPedido(misPedidos, nuevoPedido, misPedidos.get(index).id_pedido, index);
-				
-				pedidoAdapter.notifyDataSetChanged();
+				updateListView(pedido.actualizarPedido(mPedido, misPedidos.get(index).id_pedido));
 				dialog.dismiss();
 			}
 		});
@@ -276,20 +302,20 @@ public class PedidoActivity extends Activity {
 				Log.d("SEARCH", query);
 				
 				ArrayList<Pedido> tempArrayList = new ArrayList<Pedido>();
-				tempArrayList =  pedido.misPedidos(ClientesActivity.PedidosGeneral, id_cliente);				
-				misPedidos.clear();
+				ArrayList<Pedido> requestArrayList = new ArrayList<Pedido>();
+				tempArrayList =  pedido.ListarPedidos();				
 					
 				for(Pedido c: tempArrayList){
 					
 					Log.d("SEARCH", "BUSCANDO: " + c.toString());
 					
 					if (c.toString().toLowerCase().contains(query.toString().toLowerCase())) {
-						misPedidos.add(c);
+						requestArrayList.add(c);
 					}
 					
 				}						
 				
-				pedidoAdapter.notifyDataSetChanged();
+				updateListView(requestArrayList);
 
 				return true; 
             }

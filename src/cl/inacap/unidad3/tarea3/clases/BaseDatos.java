@@ -44,7 +44,7 @@ public class BaseDatos extends SQLiteOpenHelper {
 			+ "visible INTEGER"
 			+ ");";
 	
-	private String CREATE_TABLE_DIRECCION = "CREATE TABLE direccion(" 
+	private String CREATE_TABLE_POSICION = "CREATE TABLE posicion(" 
 			+ "id_direccion INTEGER PRIMARY KEY AUTOINCREMENT," 
 			+ "latitud REAL,"
 			+ "longitud REAL,"
@@ -74,7 +74,7 @@ public class BaseDatos extends SQLiteOpenHelper {
 		db.execSQL(CREATE_TABLE_CLIENTE);
 		db.execSQL(CREATE_TABLE_PRODUCTO);
 		db.execSQL(CREATE_TABLE_PEDIDO);
-		db.execSQL(CREATE_TABLE_DIRECCION);
+		db.execSQL(CREATE_TABLE_POSICION);
 		
 		//poblamos las tablas con datos de prueba
 		db.execSQL(INSERT_DB_USUARIO);

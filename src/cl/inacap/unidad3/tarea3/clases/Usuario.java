@@ -7,8 +7,14 @@ import org.json.JSONObject;
 
 import cl.inacap.unidad3.tarea3.activity.R;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Usuario {
+	
+	public String TAG = "Usuario Class";
+	
 	public int id_usuario;
 	public String nombre_usuario;
 	public String login_usuario;
@@ -21,34 +27,29 @@ public class Usuario {
 	{
 		ArrayList<Usuario> lista = new ArrayList<Usuario>();
 		
-		String usuarios[] = this.context.getResources().getStringArray(R.array.usuarios_array);
-		
-		int cantidad = usuarios.length;
-		
-		for(int i =0; i < cantidad; i++)
-		{
-			
-			try {
-				
-				JSONObject jsonUsuarios = new JSONObject(usuarios[i]);
-				
-				Usuario usuario = new Usuario();
-				usuario.id_usuario = jsonUsuarios.getInt("id_usuario");
-				usuario.nombre_usuario = jsonUsuarios.getString("nombre_usuario");
-				usuario.login_usuario = jsonUsuarios.getString("login_usuario");
-				usuario.contrasena = jsonUsuarios.getString("contrasena");
+		//Creamos la query para obtener los registros
+        String query = "SELECT * FROM usuario";
+ 
+        //ejecutamos la query
+        SQLiteDatabase db = new BaseDatos(context).getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        
+        Usuario usuario = null;
+        
+        if (cursor.moveToFirst()) {
+            do {
+            	
+            	usuario = new Usuario();
+				usuario.id_usuario = cursor.getInt(0);
+				usuario.nombre_usuario = cursor.getString(1);
+				usuario.login_usuario = cursor.getString(2);
+				usuario.contrasena = cursor.getString(3);
 				
 				lista.add(usuario);
-				
-			} catch (JSONException e) {
-
-				e.printStackTrace();
-			}
-			
-			
-			
-		}
-		
+            	
+            } while (cursor.moveToNext());
+        }
+	
 		return lista;
 	}
 	
