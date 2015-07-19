@@ -64,35 +64,41 @@
         <Button
             android:id="@+id/btn_pedido_eliminar"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="30"
             android:textSize="14sp"
             android:text="@string/btn_pedido_eliminar"
             android:background="@drawable/button_style"
             android:textColor="#FFFFFFFF"
-            android:layout_margin="2dp"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="2dp"
+            android:drawableLeft="@drawable/ic_delete"/>
         
         <Button
             android:id="@+id/btn_pedido_crear"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="30"
             android:textSize="14sp"
             android:text="@string/btn_pedido_crear"
             android:background="@drawable/button_style"
             android:textColor="#FFFFFFFF"
-            android:layout_margin="2dp"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="2dp"
+            android:drawableLeft="@drawable/ic_add"/>
         
         <Button
             android:id="@+id/btn_pedido_actualizar"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="30"
             android:textSize="14sp"
             android:text="@string/btn_pedido_actualizar"
             android:background="@drawable/button_style"
             android:textColor="#FFFFFFFF"
-            android:layout_margin="2dp"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="2dp"
+            android:drawableLeft="@drawable/ic_check"/>
                    
     </LinearLayout>
     
@@ -103,6 +109,7 @@
         android:textSize="14sp"
         android:text="@string/btn_pedido_cancelar"
         android:background="@drawable/button_style"
-        android:textColor="#FFFFFFFF"/>
+        android:textColor="#FFFFFFFF"
+        android:drawableLeft="@drawable/ic_cancel"/>
 
 </LinearLayout>

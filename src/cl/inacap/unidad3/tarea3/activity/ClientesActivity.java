@@ -295,7 +295,7 @@ public class ClientesActivity extends Activity implements LocationListener {
         SearchView search = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
-        
+         
         // creamos el listener para recibir los datos a buscar
         search.setOnQueryTextListener(new OnQueryTextListener() { 
 
