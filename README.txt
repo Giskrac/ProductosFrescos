@@ -2,7 +2,7 @@
 Titulo		: CASO EMPRESARIAL "Productos Frescos S.A."
 Asignatura	: PROGRAMACIÓN DE APLICACIONES MÓVILES EN ANDROID
 Unidad		: 4:  Aspectos avanzados de desarrollo en Android
-Actividad	: 18: Tarea sumativa: Mejorando el “look and feel” de la aplicación
+Actividad	: 20 – Trabajo final: Internacionalización de una aplicación móvil.
 Profesor	: CRISTIAN CORREA
 Alumno		: GUILLERMO CASTILLO ISKRAC
 
