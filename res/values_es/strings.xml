@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="app_name">Productos Frescos S.A.</string>
+    <string name="action_pedido">Resumen de Caja</string>
+    <string name="lb_cliente_nombre">Nombre</string>
+    <string name="lb_cliente_direccion">Direccion</string>
+    <string name="lb_cliente_telefono">Telefono</string>
+    <string name="btn_cliente_crear">Crear</string>
+    <string name="btn_cliente_eliminar">Eliminar</string>
+    <string name="btn_cliente_actualizar">Actualizar</string>
+    <string name="btn_cliente_cancelar">Cancelar</string>
+    <string name="btn_cliente_crear_externo">Crear Nuevo Cliente</string>
+    <string name="dialog_titulo_cliente_crear">Crear Nuevo Cliente</string>
+    <string name="dialog_titulo_cliente_editar">Modificar Cliente</string>
+    <string name="lb_pedido_productos">Productos</string>
+    <string name="lb_pedido_cantidad">Cantidad</string>
+    <string name="lb_pedido_precio">Precio</string>
+    <string name="btn_pedido_crear">Crear</string>
+    <string name="btn_pedido_eliminar">Eliminar</string>
+    <string name="btn_pedido_actualizar">Actualizar</string>
+    <string name="btn_pedido_cancelar">Cancelar</string>
+    <string name="btn_pedido_crear_externo">Crear Nuevo Pedido</string>
+    <string name="dialog_titulo_pedido_crear">Crear Nuevo Pedido</string>
+    <string name="dialog_titulo_pedido_editar">Modificar Pedido</string> 
+
+    <string-array name="clientes_array">
+        <item>{\'id_cliente\':1,\'nombre_cliente\':\'Almacen La Joyita\',\'direccion_cliente\':\'Macul 3456\',\'telefono_cliente\':\'56222345678\',\'id_usuario\':1,\'visible\':1}</item>
+        <item>{\'id_cliente\':2,\'nombre_cliente\':\'Botilleria don Chuma\',\'direccion_cliente\':\'Avenida el Valle 0345\',\'telefono_cliente\':\'56223452345\',\'id_usuario\':2,\'visible\':1}</item>
+        <item>{\'id_cliente\':3,\'nombre_cliente\':\'Panaderia Buenos Dias\',\'direccion_cliente\':\'Las Codornices 376\',\'telefono_cliente\':\'56229877854\',\'id_usuario\':1,\'visible\':1}</item>
+        <item>{\'id_cliente\':4,\'nombre_cliente\':\'Almacen Don Luis\',\'direccion_cliente\':\'Pasaje Huelen 404\',\'telefono_cliente\':\'56221265783\',\'id_usuario\':1,\'visible\':1}</item>
+        <item>{\'id_cliente\':5,\'nombre_cliente\':\'Almacen Rayito de sol\',\'direccion_cliente\':\'Valle del sol 0123\',\'telefono_cliente\':\'56221189654\',\'id_usuario\':2,\'visible\':1}</item>
+        <item>{\'id_cliente\':6,\'nombre_cliente\':\'Botilleria Lemunaho\',\'direccion_cliente\':\'Pasaje llanura 35\',\'telefono_cliente\':\'56225736547\',\'id_usuario\':2,\'visible\':1}</item>
+    </string-array>
+    <string-array name="usuarios_array">
+        <item>{\'id_usuario\':1,\'nombre_usuario\':\'Jose Gonzales\',\'login_usuario\':\'jose\',\'contrasena\':\'jose\'}</item>
+        <item>{\'id_usuario\':2,\'nombre_usuario\':\'Luis Astudillo\',\'login_usuario\':\'luis\',\'contrasena\':\'luis\'}</item>
+    </string-array>
+    <string-array name="productos_array">
+        <item>{\'id_producto\':1,\'nombre_producto\':\'Coca-Cola 3lt\',\'precio_producto\':1200}</item>
+        <item>{\'id_producto\':2,\'nombre_producto\':\'Chicles BigTime 100 unidades\',\'precio_producto\':2000}</item>
+        <item>{\'id_producto\':3,\'nombre_producto\':\'Pepsi 2lt\',\'precio_producto\':1500}</item>
+        <item>{\'id_producto\':4,\'nombre_producto\':\'Papas fritas Evercrisp 60 unidades\',\'precio_producto\':2180}</item>
+        <item>{\'id_producto\':5,\'nombre_producto\':\'Alfajos Fruna 20 unidades\',\'precio_producto\':3000}</item>
+        <item>{\'id_producto\':6,\'nombre_producto\':\'Super 8 20 unidades\',\'precio_producto\':6520}</item>
+        <item>{\'id_producto\':7,\'nombre_producto\':\'Galletas de Soda Grande\',\'precio_producto\':3180}</item>
+        <item>{\'id_producto\':8,\'nombre_producto\':\'Galletas de Soda mediana\',\'precio_producto\':3145}</item>
+        <item>{\'id_producto\':9,\'nombre_producto\':\'Helado Cremino Caja\',\'precio_producto\':2599}</item>
+        <item>{\'id_producto\':10,\'nombre_producto\':\'Helado Magnum Caja\',\'precio_producto\':3250}</item>
+    </string-array>
+
+    <string name="title_activity_modificar_clientes">Modificar Cliente</string>
+    <string name="title_activity_clientes">Clientes</string>
+    <string name="title_activity_pedido">Pedidos</string>
+    <string name="title_activity_informe">Informe de Pedidos</string>
+    <string name="action_Informe">Resumen de Caja</string>
+    <string name="action_rutas">Rutas</string>
+    <string name="mensaje_error_Login">Usuario o contraseña incorrectos</string>
+    <string name="action_search">Buscar</string>
+    <string name="buscar_name">Buscar</string>
+    <string name="buscar_hint">Buscar aqui</string>
+    <string name="color_actionBar">#FF4d92b8</string>
+    <string name="title_activity_mapa">Ruta</string>
+    
+    <string name="txt_ingrese_usuario">Ingrese Usuario</string>
+    <string name="txt_ingrese_contrasena">Ingrese Contraseña</string>
+    <string name="btn_ingresar">Ingresar</string>
+    
+    <string name="titulo_pedido">Pedido: </string>
+    
+    <string name="total_pedidos">Total pedidos:</string>
+    <string name="total_entregas">Total entregas:</string>
+    <string name="saldo">Saldo:</string>
+    
+    
+
+</resources>
