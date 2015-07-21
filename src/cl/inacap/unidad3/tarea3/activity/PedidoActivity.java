@@ -82,7 +82,7 @@ public class PedidoActivity extends Activity {
 		id_cliente = bundle.getInt("id_cliente");
 		nombre_cliente = bundle.getString("nombre_cliente");
 		
-		actionBar.setTitle("Pedido: " + nombre_cliente);
+		actionBar.setTitle(getString(R.string.titulo_pedido) + nombre_cliente);
 		
 		mProducto = new Producto();
 		arrayProductos = mProducto.listaProductos(this);

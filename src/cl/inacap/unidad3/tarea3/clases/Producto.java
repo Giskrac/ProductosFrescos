@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import cl.inacap.unidad3.tarea3.activity.R;
 
 public class Producto {
 	public int id_producto;

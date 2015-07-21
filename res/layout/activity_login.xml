@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Ingrese Usuario"
+        android:hint="@string/txt_ingrese_usuario"
         android:layout_marginBottom="10dp"
         android:text="jose" >
 
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Ingrese Contraseña"
+        android:hint="@string/txt_ingrese_contrasena"
         android:inputType="textPassword"
         android:layout_marginBottom="20dp"
         android:text="jose" />
@@ -53,7 +53,7 @@
         android:id="@+id/btn_ingresar"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:text="Ingresar"
+        android:text="@string/btn_ingresar"
         android:background="@drawable/button_style"
         android:textColor="#FFFFFFFF" />
 

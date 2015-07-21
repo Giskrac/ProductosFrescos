@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    
+    <string name="app_name">Productos Frescos S.A.</string>
+    <string name="action_pedido">Resumen de Caja</string>
+    <string name="lb_cliente_nombre">Nombre</string>
+    <string name="lb_cliente_direccion">Direccion</string>
+    <string name="lb_cliente_telefono">Telefono</string>
+    <string name="btn_cliente_crear">Crear</string>
+    <string name="btn_cliente_eliminar">Eliminar</string>
+    <string name="btn_cliente_actualizar">Actualizar</string>
+    <string name="btn_cliente_cancelar">Cancelar</string>
+    <string name="btn_cliente_crear_externo">Crear Nuevo Cliente</string>
+    <string name="dialog_titulo_cliente_crear">Crear Nuevo Cliente</string>
+    <string name="dialog_titulo_cliente_editar">Modificar Cliente</string>
+    <string name="lb_pedido_productos">Productos</string>
+    <string name="lb_pedido_cantidad">Cantidad</string>
+    <string name="lb_pedido_precio">Precio</string>
+    <string name="btn_pedido_crear">Crear</string>
+    <string name="btn_pedido_eliminar">Eliminar</string>
+    <string name="btn_pedido_actualizar">Actualizar</string>
+    <string name="btn_pedido_cancelar">Cancelar</string>
+    <string name="btn_pedido_crear_externo">Crear Nuevo Pedido</string>
+    <string name="dialog_titulo_pedido_crear">Crear Nuevo Pedido</string>
+    <string name="dialog_titulo_pedido_editar">Modificar Pedido</string> 
+    <string name="title_activity_modificar_clientes">Modificar Cliente</string>
+    <string name="title_activity_clientes">Clientes</string>
+    <string name="title_activity_pedido">Pedidos</string> 
+    <string name="title_activity_informe">Informe de Pedidos</string>
+    <string name="action_Informe">Resumen de Caja</string>
+    <string name="action_rutas">Rutas</string>
+    <string name="mensaje_error_Login">Usuario o contraseña incorrectos</string>
+    <string name="action_search">Buscar</string>
+    <string name="buscar_name">Buscar</string>
+    <string name="buscar_hint">Buscar aqui</string>
+    <string name="color_actionBar">#FF4d92b8</string>
+    <string name="title_activity_mapa">Ruta</string>    
+    <string name="txt_ingrese_usuario">Ingrese Usuario</string>
+    <string name="txt_ingrese_contrasena">Ingrese Contraseña</string>
+    <string name="btn_ingresar">Ingresar</string>    
+    <string name="titulo_pedido">Pedido: </string>    
+    <string name="total_pedidos">Total pedidos:</string>
+    <string name="total_entregas">Total entregas:</string>
+    <string name="saldo">Saldo:</string>
+</resources>
